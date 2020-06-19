@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html>
+<!-- PROGRAMMED BY JORELLE LABANZA -->
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Assets/lib/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/master.css" />
+    <script>
+    var base_url = "@Request.Url.GetLeftPart(UriPartial.Authority)@Url.Content("~")";
+    var get_url = window.location.pathname;
+    var compare_url = get_url.substring(get_url.lastIndexOf('/') + 1).toUpperCase();
+    var userDetailsSession = '@ViewBag.fullName';
+    </script>
+
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="nav-link" data-toggle="collapse" onclick="window.location = base_url" style="cursor: pointer;">
+                            <span class="fa fa-home"></span> HOME
+                        </a>
+                    </div>
+                    <div class="panel-heading">
+                        <a class="nav-link" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                            <span class="fa fa-th-list"></span> POKEDEX
+                        </a>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse" style="font-size:12px;">
+                        <div class="panel-body">
+                            <a class="nav-link" href="" id="redirect-dashboard">
+                                <span class="fa fa-chart-line"></span> CATCH POKEMON 
+                            </a>
+                            <a class="nav-link" href="" id="redirect-pending-task">
+                                <span class="fa fa-hourglass-half"></span> TRAIN POKEMON
+                            </a>
+                            <a class="nav-link" href="" id="redirect-data-extraction">
+                                <span class="fa fa-database"></span> RELEASE POKEMON
+                            </a>
+                            @*<a class="nav-link" href="" id="redirect-pending-task">
+                                <span class="fa fa-percent"></span> HIT RATE
+                            </a>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="nav-link" data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                            <span class="fa fa-th-list"></span> TRAINER SETTINGS
+                        </a>
+                    </div>
+                    <div id="collapse5" class="panel-collapse collapse" style="font-size:12px;">
+                        <div class="panel-body">
+                            <a class="nav-link" href="" id="redirect-dashboard-qfn">
+                                <span class="fa fa-chart-line"></span> CHANGE ATTRIBUTES
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div id="content">
+            <nav class="navbar navbar-expand-lg" style="width:auto;">
+
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+
+                        <span>MENU</span>
+                    </button>
+                    @*<button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fas fa-align-justify"></i>
+                        </button>*@
+                    <div class="brand">
+                        <a href="#">
+                            <img src="~/Assets/img/ball.png" alt="Logo" style="width:40px;">
+                        </a>
+                    </div>
+               
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+
+                            @if (ViewBag.employeeData != null)
+                            {
+                                <li id="logout_user" class="nav-item active">
+                                    <a class="nav-link btn btn-info" style="color:white"><span class="fa fa-sign-out-alt mr-2"></span>LOG-OUT</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    
+                                </li>
+                                <li id="login_user" class="nav-item active">
+                                    <a class="nav-link btn btn-info" style="color:white" data-toggle="popover" data-placement="bottom"><span class="fa fa-sign-in-alt mr-2"></span>TRAINER LOG-IN</a>
+                                    <div id="popover-content" class="list-group" style="display: none; z-index:999999">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    USERNAME:
+                                                </div>
+                                            </div>
+                                            <div class="row login_type">
+                                                <div class="col-12">
+                                                    <input id="username" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    PASSWORD:
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-12">
+                                                    <input id="password" class="form-control" type="password" />
+                                                </div>
+                                            </div>
+                                            <div class="form-check mb-1">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" id="no-ad-login" value="UNCHECKED" class="form-check-input">WITHOUT AD
+                                                </label>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <button class="btn btn-success" id="log-in" style="float:right">LOG-IN</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            @RenderBody()
+        </div>
+    </div>
+    <footer>
+        <script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/jquery-multidownload.js"></script>
+        <script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/bootstrap-notify.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/datatables.export/buttons.html5.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/datatables.export/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/datatables.export/jszip.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/datatables.export/vfs_fonts.js"></script>
+        <script type="text/javascript" src="~/Scripts/datatables.export/buttons.bootstrap4.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/dataTables.bootstrap4.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/daterangepicker.js"></script>
+        <script type="text/javascript" src="~/Scripts/date.js"></script>
+        <script type="text/javascript" src="~/Scripts/popper.js"></script>
+        <script type="text/javascript" src="~/Scripts/Chart.min.js"></script>
+        <script type="text/javascript" src="~/Assets/Dashboard.js"></script>
+        <script type="text/javascript" src="~/Assets/history.js"></script>
+        <script type="text/javascript" src="~/Assets/Form.js"></script>
+        <script type="text/javascript" src="~/Assets/Login.js"></script>
+        <script type="text/javascript" src="~/Assets/modal.js"></script>
+        <script type="text/javascript" src="~/Assets/modalBurnIn.js"></script>
+        <script type="text/javascript" src="~/Assets/modalQFN.js"></script>
+        <script type="text/javascript" src="~/Assets/modalCENTS.js"></script>
+        <script type="text/javascript" src="~/Assets/data_extraction.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+                $('[data-toggle="popover"]').popover({
+                    html: true,
+                    content: function () {
+                        return $('#popover-content').html();
+                    }
+                });
+                $(document).on("change", "#no-ad-login:checkbox", function () {
+                    //alert("Handler for .change() called.");
+                    if ($(this).prop("checked") == true) {
+                        $(".login_type").empty();
+                        $("#no-ad-login").val("CHECKED");
+                        $.post(
+                            base_url + "Form/get_user",
+                            function (usr) {
+                                var users = '';
+                                users += "<div class='col-12'>";
+                                users += "<select class='form-control' id='username'>";
+                                $.each(usr, function (i, username) {
+                                    users += "<option class='user' data-user-id='" + username.id + "' value='" + username.email_address + "'>" + username.email_address + "</option>";
+                                });
+                                users += "</select>";
+                                users += "</div>";
+                                $(".login_type").append(users);
+
+                            }
+                        );
+                        //$(".login_type").append("<input id='username' class='form-control' />");
+                    }
+
+                    else if ($(this).prop("checked") == false) {
+                        $(".login_type").empty();
+                        $("#no-ad-login").val("UNCHECKED");
+                        var users = '';
+                        users += "<div class='col-12'>";
+                        users += "<input id='username' class='form-control' />";
+                        users += "</div>";
+                        $(".login_type").append(users);
+                    }
+
+                });
+            });
+
+        </script>
+    </footer>
+</body>
+</html>

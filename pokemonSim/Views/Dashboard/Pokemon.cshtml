@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "TRAIN POKEMON";
+    ViewBag.Redirect = "reportSystem";
+    ViewBag.ModalTrigger = "OSR";
+    Layout = "~/Views/Shared/_Modal.cshtml";
+}
+<script>
+    var ControllerName = '@ViewBag.ControllerName';
+    var ActionName = '@ViewBag.ActionName';
+    var idNumber = '@ViewBag.idNumber';
+    var FFID = '@ViewBag.userFFID';
+</script>
+
+<div class="container-fluid h-100">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">POKEMON LIST</div>
+                <div class="card-body">
+                    <table id="pending" class="table table-hover" style="width:100%; font-size:18px;">
+                        <thead>
+                            <tr>
+                                <th>DISPLAY</th>  
+                                <th>POKEMON NAME</th>
+                                <th>CURRENT LEVEL</th>
+                                <th>CURRENT EXP</th>
+                                <th>POKEMON TYPE</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody id="append-pokemon"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="loader"></div>

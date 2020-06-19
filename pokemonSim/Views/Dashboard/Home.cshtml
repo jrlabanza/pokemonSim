@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "ONLINE SETUP REQUEST";
+    ViewBag.Redirect = "reportSystem";
+    ViewBag.ModalTrigger = "OSR";
+    Layout = "~/Views/Shared/_Modal.cshtml";
+}
+<script>
+    var ControllerName = '@ViewBag.ControllerName';
+    var ActionName = '@ViewBag.ActionName';
+    var idNumber = '@ViewBag.idNumber';
+    var FFID = '@ViewBag.userFFID';
+</script>
+
+<div>
+    <span style="font-size:80px; margin-left:80px;">WELCOME BACK TRAINER</span>
+    <div class="row" style="margin-left:127px">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-header">PROFILE</div>
+                <div class="card-body align-items-center d-flex justify-content-center">
+                    <img src="~/Assets/img/gloria.png" class="img-rounded shadow" alt="Cinque Terre">
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <table class="incident-details-tb table">
+                <thead>
+                    <tr>
+                        <th colspan="4" style="text-align:center">TRAINER STATISTICS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>TRAINER ID:</th>
+                        <td id="trainer_id"></td>
+
+                        <th>TRAINER NAME:</th>
+                        <td id="trainer_name"></td>
+                    </tr>
+                    <tr>
+                        <th>GENDER:</th>
+                        <td id="gender"></td>
+
+                        <th>TRAINER LEVEL:</th>
+                        <td id="trainer_lvl"></td>
+                    </tr>
+                    <tr>
+                        <th>CURRENT BADGE COUNT</th>
+                        <td id="current_badge_count"></td>
+
+                        <th>CURRENT SEASON</th>
+                        <td id="current_season"></td>
+                    </tr>
+                    <tr>
+                        <th>ELIGIBLE TO CATCH:</th>
+                        <td id="can_catch"></td>
+                    </tr>
+                </tbody>
+            </table>
+            @*<div class="card">
+                    <div class="card-header">TRAINER STATISTICS</div>
+                    <div class="card-body">
+
+                    </div>
+                </div>*@
+        </div>
+    </div>
+
+</div>
+
+<div class="loader"></div>

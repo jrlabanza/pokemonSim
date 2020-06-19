@@ -1,0 +1,967 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (ViewBag.ModalTrigger == "OSR")
+{
+    if (ViewBag.employeeData != null)
+    {
+        <div class="modal" id="myModal">
+            <div class="modal-dialog modal-lg" style="height:1200px;">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title"></h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div hidden>
+                            <input id="id-placeholder" />
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4">
+                                    <h4>M3 NUMBER</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <input class="form-control" id="m3-number" readonly />
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-4">
+                                    TESTER ID
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <input class="form-control" id="tester-id" list="tester-id-datalist" readonly />
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    HANDLER ID
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <input class="form-control" id="handler-id" list="handler-id-datalist" readonly />
+                                    <datalist id="handler-id-datalist"></datalist>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    FAMILY
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <input class="form-control" id="family" readonly />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    PACKAGE
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <input class="form-control" id="package" readonly />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    PROCESS
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-4">
+                                    <input class="form-control" id="process" readonly />
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-4">
+                                    REQUESTED BY
+                                </div>
+                                <div class="col-4">
+                                    DATE SUBMITTED
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <input class="form-control" id="requested-by" readonly />
+                                </div>
+
+                                <div class="col-4">
+                                    <input class="form-control" id="date-submitted" readonly />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    EXPECTED DATE OF SETUP
+                                </div>
+                                <div class="col-4">
+                                    RECENTLY UPDATED BY
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="input-group">
+
+                                        @if (ViewBag.employeeData != null)
+                                        {
+                                            <div class="input-group mb-3">
+                                                <input id="expected-date-of-setup" class="form-control customdate" type="text" />
+                                                <div class="input-group-append">
+                                                    @*<a href="#" class="btn btn-success" id="enable-update-expected-date-of-setup" data-toggle="popover"><i class="fas fa-cog"></i></a>*@
+
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <input id="expected-date-of-setup" class="form-control" type="text" readonly />
+                                        }
+
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <input class="form-control" id="recently-updated-by" readonly />
+                                </div>
+                            </div>
+                            <div class="update-expected-date-of-setup">
+                                <div class="row">
+                                    <div class="col-12">
+                                        REASON TO CHANGE EXPECTED DATE OF SETUP
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <textarea class="form-control" id="reason-to-change-setup"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    SHIFT
+                                </div>
+                                @if (ViewBag.employeeData != null)
+                                {
+                                    <div class="col-4 update-checker">
+                                        REMARKS
+                                    </div>
+                                }
+
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <input class="form-control" id="shift" readonly>
+                                </div>
+                                @if (ViewBag.employeeData != null)
+                                {
+                                    <div class="col-6 update-checker">
+                                        <textarea class="form-control" id="remarks" rows="3"></textarea>
+                                    </div>
+                                }
+                            </div>
+                            @if (ViewBag.employeeData != null)
+                            {
+                                <div class="update-checker">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            STATUS
+                                        </div>
+                                        <div class="col-5">
+                                            LOT STATUS
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <select class="form-control" id="status" data-current-status=""></select>
+                                        </div>
+                                        <input id="lot-validity" value="@ViewBag.LotValidUser" hidden />
+                                        @if (ViewBag.LotIdValid != "INVALID")
+                                        {
+                                            <div class="col-5">
+                                                <select class="form-control" id="lot_status" data-lot-status-check="">
+                                                    <option value="N/A">UNDECIDED</option>
+                                                    <option value="APPROVED">APPROVED</option>
+                                                    <option value="DECLINED">DECLINED</option>
+                                                </select>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-5">
+                                                <input id="lot_status" class="form-control" readonly />
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="row release-checking">
+                                        <div class="col-5">
+                                            RELEASED TO
+                                        </div>
+                                    </div>
+                                    <div class="row  release-checking">
+                                        <div class="col-5">
+                                            <input id="released-to" class="form-control" list="released-list" />
+                                            <datalist id="released-list"></datalist>
+                                        </div>
+                                    </div>
+                                    <div class="row returned-checking">
+                                        <div class="col-5">
+                                            RETURNED BY
+                                        </div>
+                                    </div>
+                                    <div class="row returned-checking">
+                                        <div class="col-5">
+                                            <input id="returned-by" class="form-control" list="returned-list" />
+                                            <datalist id="returned-list"></datalist>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            UNSCHEDULED APPROVAL
+                                        </div>
+                                        <div class="col-5 lot-email-approval">
+                                            EMAIL APPROVAL ATTACHMENT
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        @if (ViewBag.SchedValidUser == "TRUE")
+                                        {
+                                            <div class="col-5">
+                                                <select class="form-control" id="unscheduled-approval">
+                                                    <option value="N/A">UNDECIDED</option>
+                                                    <option value="APPROVED">APPROVED</option>
+                                                    <option value="DECLINED">DECLINED</option>
+                                                </select>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-5">
+                                                <input id="unscheduled-approval" class="form-control" readonly />
+                                            </div>
+                                        }
+                                        <div class="col-5 lot-email-approval">
+                                            <div class="custom-file">
+                                                <input class="custom-file-input" type="file" id="file-upload-osr" multiple />
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        @if (ViewBag.employeeData != null)
+                        {
+                            <div class="update-checker">
+                                <button type="button" id="update-osr" class="btn btn-success">UPDATE</button>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="modal" id="myModal">
+            <div class="modal-dialog modal-sm" style="height:1200px;">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">LOG IN</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="container modal-login">
+                            <div class="row">
+                                <div class="col-12">
+                                    USERNAME
+                                </div>
+                            </div>
+                            <div class="row login_type">
+                                <div class="col-12">
+                                    <input id="username" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    PASSWORD
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <input id="password" class="form-control" type="password" />
+                                </div>
+                            </div>
+                            <div class="form-check mb-1">
+                                <label class="form-check-label">
+                                    <input type="checkbox" id="no-ad-login" value="UNCHECKED" class="form-check-input">WITHOUT AD
+                                </label>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <button class="btn btn-success" id="log-in" style="float:right">LOG-IN</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        @if (ViewBag.employeeData != null)
+                        {
+                            <div class="update-checker">
+                                <button type="button" id="update-osr" class="btn btn-success">UPDATE</button>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    }
+
+}
+@*BURN IN*@
+@if (ViewBag.ModalTrigger == "BURNIN")
+{
+    <div class="modal" id="myModal">
+        <div class="modal-dialog modal-lg" style="height:1200px;">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div hidden>
+                        <input id="id-placeholder" />
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <h4>M3 NUMBER</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input class="form-control" id="m3-number" readonly />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-4">
+                                HANDLER ID
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="handler-id" list="handler-id-datalist" readonly />
+                                <datalist id="handler-id-datalist"></datalist>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                FAMILY
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="family" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                PACKAGE
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="package" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                PROCESS
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="process" readonly />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-4">
+                                REQUESTED BY
+                            </div>
+                            <div class="col-4">
+                                DATE SUBMITTED
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="requested-by" readonly />
+                            </div>
+
+                            <div class="col-4">
+                                <input class="form-control" id="date-submitted" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                EXPECTED DATE OF SETUP
+                            </div>
+                            <div class="col-4">
+                                RECENTLY UPDATED BY
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="input-group">
+
+                                    @if (ViewBag.employeeData != null)
+                                    {
+                                        <div class="input-group mb-3">
+                                            <input id="expected-date-of-setup" class="form-control customdate" type="text" />
+                                            <div class="input-group-append">
+                                                @*<a href="#" class="btn btn-success" id="enable-update-expected-date-of-setup" data-toggle="popover"><i class="fas fa-cog"></i></a>*@
+
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <input id="expected-date-of-setup" class="form-control" type="text" readonly />
+                                    }
+
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <input class="form-control" id="recently-updated-by" readonly />
+                            </div>
+                        </div>
+                        <div class="update-expected-date-of-setup">
+                            <div class="row">
+                                <div class="col-12">
+                                    REASON TO CHANGE EXPECTED DATE OF SETUP
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8">
+                                    <textarea class="form-control" id="reason-to-change-setup"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                SHIFT
+                            </div>
+                            @if (ViewBag.employeeData != null)
+                            {
+                                <div class="col-4 update-checker">
+                                    REMARKS
+                                </div>
+                            }
+
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="shift" readonly>
+                            </div>
+                            @if (ViewBag.employeeData != null)
+                            {
+                                <div class="col-6 update-checker">
+                                    <textarea class="form-control" id="remarks" rows="3"></textarea>
+                                </div>
+                            }
+                        </div>
+                        @if (ViewBag.employeeData != null)
+                        {
+                            <div class="update-checker">
+                                <div class="row">
+                                    <div class="col-4">
+                                        STATUS
+                                    </div>
+                                    <div class="col-4 release-checking">
+                                        RELEASED TO
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <select class="form-control" id="status"></select>
+                                    </div>
+                                    <div class="col-4 release-checking">
+                                        <input id="released-to" class="form-control" list="released-list" />
+                                        <datalist id="released-list"></datalist>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    @if (ViewBag.employeeData != null)
+                    {
+                        <div class="update-checker">
+                            <button type="button" id="update-osr" class="btn btn-success">UPDATE</button>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}
+
+@if (ViewBag.ModalTrigger == "OSRQFN")
+{
+    <div class="modal" id="myModal">
+        <div class="modal-dialog modal-lg" style="height:1200px;">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div hidden>
+                        <input id="id-placeholder" />
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <h4>M3 NUMBER</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input class="form-control" id="m3-number" readonly />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-4">
+                                TESTER ID
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="tester-id" list="tester-id-datalist" readonly />
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                HANDLER ID
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="handler-id" list="handler-id-datalist" readonly />
+                                <datalist id="handler-id-datalist"></datalist>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                FAMILY
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="family" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                PACKAGE
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="package" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                PROCESS
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="process" readonly />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-4">
+                                REQUESTED BY
+                            </div>
+                            <div class="col-4">
+                                DATE SUBMITTED
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="requested-by" readonly />
+                            </div>
+
+                            <div class="col-4">
+                                <input class="form-control" id="date-submitted" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                EXPECTED DATE OF SETUP
+                            </div>
+                            <div class="col-4">
+                                RECENTLY UPDATED BY
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="input-group">
+
+                                    @if (ViewBag.employeeData != null)
+                                    {
+                                        <div class="input-group mb-3">
+                                            <input id="expected-date-of-setup" class="form-control customdate" type="text" />
+                                            <div class="input-group-append">
+                                                @*<a href="#" class="btn btn-success" id="enable-update-expected-date-of-setup" data-toggle="popover"><i class="fas fa-cog"></i></a>*@
+
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <input id="expected-date-of-setup" class="form-control" type="text" readonly />
+                                    }
+
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <input class="form-control" id="recently-updated-by" readonly />
+                            </div>
+                        </div>
+                        <div class="update-expected-date-of-setup">
+                            <div class="row">
+                                <div class="col-12">
+                                    REASON TO CHANGE EXPECTED DATE OF SETUP
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8">
+                                    <textarea class="form-control" id="reason-to-change-setup"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                SHIFT
+                            </div>
+                            @if (ViewBag.employeeData != null)
+                            {
+                                <div class="col-4 update-checker">
+                                    REMARKS
+                                </div>
+                            }
+
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="shift" readonly>
+                            </div>
+                            @if (ViewBag.employeeData != null)
+                            {
+                                <div class="col-6 update-checker">
+                                    <textarea class="form-control" id="remarks" rows="3"></textarea>
+                                </div>
+                            }
+                        </div>
+                        @if (ViewBag.employeeData != null)
+                        {
+                            <div class="update-checker">
+                                <div class="row">
+                                    <div class="col-6">
+                                        STATUS
+                                    </div>
+                                    <div class="col-4 release-checking">
+                                        RELEASED TO
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <select class="form-control" id="status"></select>
+                                    </div>
+                                    <div class="col-4 release-checking">
+                                        <input id="released-to" class="form-control" list="released-list" />
+                                        <datalist id="released-list"></datalist>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    @if (ViewBag.employeeData != null)
+                    {
+                        <div class="update-checker">
+                            <button type="button" id="update-osr" class="btn btn-success">UPDATE</button>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}
+@if (ViewBag.ModalTrigger == "OSR_CENTS")
+{
+    <div class="modal" id="myModal">
+        <div class="modal-dialog modal-lg" style="height:1200px;">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div hidden>
+                        <input id="id-placeholder" />
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <h4>SOCKET REQUEST NUMBER</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input class="form-control" id="m3-number" readonly />
+                            </div>
+                        </div>
+                        <hr />
+                        @if (ViewBag.employeeData != null)
+                        {
+                            <div class="update-checker">
+                                <div class="row">
+                                    <div class="col-6">
+                                        STATUS
+                                    </div>
+                                    <div class="col-4 release-checking">
+                                        RELEASED TO
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <select class="form-control" id="status"></select>
+                                    </div>
+                                    <div class="col-4 release-checking">
+                                        <input id="released-to" class="form-control" list="released-list" />
+                                        <datalist id="released-list"></datalist>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="row release-checking">
+                            <div class="col-4">
+                                SOCKET ID
+                            </div>
+                        </div>
+                        <div class="row release-checking">
+                            <div class="col-4">
+                                <input id="socket-id" class="form-control" list="socket-list" />
+                                <datalist id="socket-list"></datalist>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                HANDLER ID
+                            </div>
+                            <div class="col-4">
+                                REQUEST QUANTITY
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="handler-id" list="handler-id-datalist" readonly />
+                                <datalist id="handler-id-datalist"></datalist>
+                            </div>
+                            <div class="col-2">
+                                <input class="form-control" id="request-qty" name="request-qty"  readonly/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                HANDLER MODEL
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="handler-model" list="tester-id-datalist" readonly />
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                PACKAGE
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="package" readonly />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-4">
+                                REQUESTED BY
+                            </div>
+                            <div class="col-4">
+                                DATE SUBMITTED
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="requested-by" readonly />
+                            </div>
+
+                            <div class="col-4">
+                                <input class="form-control" id="date-submitted" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                EXPECTED DATE OF SETUP
+                            </div>
+                            <div class="col-4">
+                                RECENTLY UPDATED BY
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="input-group">
+
+                                    @if (ViewBag.employeeData != null)
+                                    {
+                                        <div class="input-group mb-3">
+                                            <input id="expected-date-of-setup" class="form-control customdate" type="text" />
+                                            <div class="input-group-append">
+                                                @*<a href="#" class="btn btn-success" id="enable-update-expected-date-of-setup" data-toggle="popover"><i class="fas fa-cog"></i></a>*@
+
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <input id="expected-date-of-setup" class="form-control" type="text" readonly />
+                                    }
+
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <input class="form-control" id="recently-updated-by" readonly />
+                            </div>
+                        </div>
+                        <div class="update-expected-date-of-setup">
+                            <div class="row">
+                                <div class="col-12">
+                                    REASON TO CHANGE EXPECTED DATE OF SETUP
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8">
+                                    <textarea class="form-control" id="reason-to-change-setup"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                SHIFT
+                            </div>
+                            @if (ViewBag.employeeData != null)
+                            {
+                                <div class="col-4 update-checker">
+                                    REMARKS
+                                </div>
+                            }
+
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input class="form-control" id="shift" readonly>
+                            </div>
+                            @if (ViewBag.employeeData != null)
+                            {
+                                <div class="col-6 update-checker">
+                                    <textarea class="form-control" id="remarks" rows="3"></textarea>
+                                </div>
+                            }
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    @if (ViewBag.employeeData != null)
+                    {
+                        <div class="update-checker">
+                            <button type="button" id="update-osr" class="btn btn-success">UPDATE</button>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}
+@RenderBody()
