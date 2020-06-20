@@ -158,6 +158,8 @@ namespace pokemonSim.Controllers
 
                         pokemonObject.increase_level_only(get_game_state["exp_cap"], new_level, id);
 
+                        results["done"] = "LEVEL ADD";
+
                         return Json(results);
                     }
                     else
@@ -165,6 +167,8 @@ namespace pokemonSim.Controllers
 
 
                         pokemonObject.evolve_pokemon(check_level_con["pokemon_name"], new_level, get_game_state["exp_cap"], id);
+
+                        results["done"] = "EVOLVE";
 
                         return Json(results);
                     }
@@ -178,6 +182,7 @@ namespace pokemonSim.Controllers
             else{ //only add exp
                 //current_exp
                 pokemonObject.increase_exp_only(current_exp, id);
+
 
                 return Json(results);
 

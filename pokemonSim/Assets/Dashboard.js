@@ -167,6 +167,32 @@ $(document).on("click", "#level-up", function () {
                     refresh.is_electric == 1 ? append += "ELECTRIC<br>" : "";
                     refresh.is_flying == 1 ? append += "FLYING<br>" : "";
                     $("#type_" + refresh.id).html(append);
+
+                    if (data.done == "LEVEL ADD") {
+                        $.notify({
+                            title: '<strong>Success!</strong>',
+                            message: refresh.pokemon_name + " LEVELED UP TO " + refresh.current_lvl +"!"
+                        }, {
+                            type: 'success',
+                            z_index: 9999
+                        });
+                        setTimeout(function () {
+                            $.notifyClose('top-right');
+                        }, 3000);
+                    }
+                    else if (data.done == "EVOLVE") {
+                        $.notify({
+                            title: '<strong>Success!</strong>',
+                            message: "POKEMON EVOLVED TO " + refresh.pokemon_name + " LEVEL " + refresh.current_lvl + "!"
+                        }, {
+                            type: 'success',
+                            z_index: 9999
+                        });
+                        setTimeout(function () {
+                            $.notifyClose('top-right');
+                        }, 3000);
+                    }
+                    
                 })
 
 
