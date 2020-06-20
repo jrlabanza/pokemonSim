@@ -88,6 +88,48 @@ namespace pokemonSim.Controllers
             return Json(results);
         }
 
+        public JsonResult get_pokemon_masterlist()
+        {
+            List<IDictionary<string, string>> results = new List<IDictionary<string, string>>();
+
+            results = pokemonObject.get_pokemon_masterlist();
+
+            return Json(results);
+        }
+
+        public JsonResult get_pokemon_masterlist_by_name(string pokemon_name)
+        {
+            IDictionary<string, string> results = new Dictionary<string, string>();
+
+            results = pokemonObject.get_pokemon_masterlist_by_name(pokemon_name);
+
+            return Json(results);
+        }
+
+
+        public JsonResult catch_pokemon(string pokemon_name, int lvl)
+        {
+            IDictionary<string, string> results = new Dictionary<string, string>();
+            IDictionary<string, string> trainer_info = new Dictionary<string, string>();
+            IDictionary<string, string> get_game_state = new Dictionary<string, string>();
+            IDictionary<string, string> get_pokemon_by_id = new Dictionary<string, string>();
+
+            trainer_info = pokemonObject.get_trainer_stats();
+            if (trainer_info["can_catch"] == "1")
+            {
+                get_game_state = pokemonObject.get_game_state_level(lvl);
+                get_pokemon_by_id = pokemonObject.get_pokemon_masterlist_by_name(pokemon_name);
+                pokemonObject.catch_pokemon(get_pokemon_by_id["pokemon_id"], get_pokemon_by_id["pokemon_name"], get_pokemon_by_id["lvl_unlock"], get_game_state["exp_cap"]);
+
+                return Json(results);
+            }
+            else {
+                results["done"] = "NOT AUTHORIZED";
+                return Json(results);
+            }
+
+        }
+
         public JsonResult level_up_pokemon(int id, int exp) {
 
             IDictionary<string, string> results = new Dictionary<string, string>();
@@ -114,7 +156,7 @@ namespace pokemonSim.Controllers
                     {
                         get_game_state = pokemonObject.get_game_state_level(new_level);
 
-                        pokemonObject.increase_level_only(get_game_state["exp_cap"], new_level);
+                        pokemonObject.increase_level_only(get_game_state["exp_cap"], new_level, id);
 
                         return Json(results);
                     }
@@ -122,7 +164,7 @@ namespace pokemonSim.Controllers
                     { // change pokemon from same pokemon id
 
 
-                        pokemonObject.evolve_pokemon(check_level_con["pokemon_name"], new_level, get_game_state["exp_cap"]);
+                        pokemonObject.evolve_pokemon(check_level_con["pokemon_name"], new_level, get_game_state["exp_cap"], id);
 
                         return Json(results);
                     }
@@ -135,7 +177,7 @@ namespace pokemonSim.Controllers
             }
             else{ //only add exp
                 //current_exp
-                pokemonObject.increase_exp_only(current_exp);
+                pokemonObject.increase_exp_only(current_exp, id);
 
                 return Json(results);
 

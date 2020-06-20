@@ -134,7 +134,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Assets\Dashboard.js" />
-    <Content Include="Assets\Form.js" />
     <Content Include="Assets\lib\fontawesome\css\all.css" />
     <Content Include="Assets\lib\fontawesome\css\all.min.css" />
     <Content Include="Assets\lib\fontawesome\css\brands.css" />
@@ -1651,8 +1650,6 @@
     <Content Include="Assets\lib\fontawesome\webfonts\fa-brands-400.svg" />
     <Content Include="Assets\lib\fontawesome\webfonts\fa-regular-400.svg" />
     <Content Include="Assets\lib\fontawesome\webfonts\fa-solid-900.svg" />
-    <Content Include="Assets\Login.js" />
-    <Content Include="Assets\modal.js" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />

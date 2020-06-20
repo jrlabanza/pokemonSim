@@ -9,53 +9,6 @@ namespace pokemonSim.Models
 {
     public class pokemonMod
     {
-        public Boolean OSRFormSubmit(string testerID, string handlerID, string family, string package, string process, string expectedDateofSetup, string shift, string status, string userFullName, string m3Number, string userFFID, string schedule, string reasonForUnplannedSetup)
-        {
-            if (schedule == "PLANNED") 
-            { 
-                string query = "INSERT INTO osr(testerID,handlerID,package,family,process,expectedDateOfSetup,shift,requestBy,status,m3Number, sub_ffID, isPlanned)"+
-                "VALUES ('" + testerID + "', '" + handlerID + "', '" + package + "', '" + family + "', '" + process + "','" + expectedDateofSetup + "', '" + shift + "', '" + userFullName + "', 'FOR PREPARATION', '"+ m3Number +"', '"+ userFFID +"', 1)";
-
-                string query2 = "INSERT INTO osr_history(testerID,handlerID,package,family,process,expectedDateOfSetup,shift,requestBy,status,m3Number)" +
-                "VALUES ('" + testerID + "', '" + handlerID + "', '" + package + "', '" + family + "', '" + process + "','" + expectedDateofSetup + "', '" + shift + "', '" + userFullName + "', 'FOR PREPARATION', '" + m3Number + "')";
-
-                Boolean results = Connection.ExecuteThisQuery(query, "Insert Form Success", Connection.pokemon_connstring);
-                Connection.ExecuteThisQuery(query2, "Insert History", Connection.pokemon_connstring);
-
-                return results;
-            }
-            else if (schedule == "UNPLANNED")
-            {
-                string query = "INSERT INTO osr(testerID,handlerID,package,family,process,expectedDateOfSetup,shift,requestBy,status,m3Number, sub_ffID, isPlanned)"+
-                "VALUES ('" + testerID + "', '" + handlerID + "', '" + package + "', '" + family + "', '" + process + "','" + expectedDateofSetup + "', '" + shift + "', '" + userFullName + "', 'FOR APPROVAL', '"+ m3Number +"', '"+ userFFID +"', 0)";
-
-                string query2 = "INSERT INTO osr_history(testerID,handlerID,package,family,process,expectedDateOfSetup,shift,requestBy,status,m3Number,reasonForUnplannedSetup)" +
-                "VALUES ('" + testerID + "', '" + handlerID + "', '" + package + "', '" + family + "', '" + process + "','" + expectedDateofSetup + "', '" + shift + "', '" + userFullName + "', 'FOR APPROVAL', '" + m3Number + "', '" + reasonForUnplannedSetup + "')";
-
-                Boolean results = Connection.ExecuteThisQuery(query, "Insert Form Success", Connection.pokemon_connstring);
-                Connection.ExecuteThisQuery(query2, "Insert History", Connection.pokemon_connstring);
-
-                return results;
-            }
-            else
-            {
-                Boolean results = false;
-
-                return results;
-            }
-
-        }
-
-        public Boolean OSRBurnInM3Number(string m3gen, int id)
-        {
-            string query = "UPDATE osr_burnin SET m3Number = '" + m3gen + "' WHERE id =" + id;
-            string query2 = "UPDATE osr_history_burnin SET m3Number = '" + m3gen + "' ORDER BY id DESC LIMIT 1";
-
-            Boolean results = Connection.ExecuteThisQuery(query, "Insert FLA Form", Connection.pokemon_connstring);
-            Connection.ExecuteThisQuery(query2, "Insert FLA Form", Connection.pokemon_connstring);
-
-            return results;
-        }
 
         public IDictionary<string, string> get_trainer_stats()
         {
@@ -65,6 +18,30 @@ namespace pokemonSim.Models
             string query = "SELECT * FROM trainer WHERE isDeleted = 0 AND trainer_id = 99470721";
 
             results = Connection.GetDataArray(query, "GET TRAINER DATA", Connection.pokemon_connstring);
+
+            return results;
+        }
+
+        public List<IDictionary<string, string>> get_pokemon_masterlist()
+        {
+
+            List<IDictionary<string, string>> results = new List<IDictionary<string, string>>();
+
+            string query = "SELECT * FROM master_pokedex";
+
+            results = Connection.GetDataAssociateArray(query, "GET OSR DATA", Connection.pokemon_connstring);
+
+            return results;
+        }
+
+        public IDictionary<string, string> get_pokemon_masterlist_by_name(string pokemon_name)
+        {
+
+            IDictionary<string, string> results = new Dictionary<string, string>();
+
+            string query = "SELECT * FROM master_pokedex WHERE pokemon_name = '"+ pokemon_name +"'";
+
+            results = Connection.GetDataArray(query, "GET OSR DATA", Connection.pokemon_connstring);
 
             return results;
         }
@@ -118,27 +95,37 @@ namespace pokemonSim.Models
             return results;
         }
 
-        public Boolean increase_level_only(string exp_cap, int new_level)
+        public Boolean increase_level_only(string exp_cap, int new_level, int id)
         {
-            string query = "UPDATE trainer_pokedex SET current_lvl = " + new_level + ", exp_cap = " + exp_cap + ", current_exp = 0";
+            string query = "UPDATE trainer_pokedex SET current_lvl = " + new_level + ", exp_cap = " + exp_cap + ", current_exp = 0 WHERE id =" + id;
 
             Boolean results = Connection.ExecuteThisQuery(query, "GET OSR DATA", Connection.pokemon_connstring);
 
             return results;
         }
 
-        public Boolean increase_exp_only(int current_exp)
+        public Boolean increase_exp_only(int current_exp, int id)
         {
-            string query = "UPDATE trainer_pokedex SET current_exp = "+ current_exp +";";
+            string query = "UPDATE trainer_pokedex SET current_exp = "+ current_exp +" WHERE id="+ id;
 
             Boolean results = Connection.ExecuteThisQuery(query, "GET OSR DATA", Connection.pokemon_connstring);
 
             return results;
         }
 
-        public Boolean evolve_pokemon(string pokemon_name, int new_level, string exp_cap)
+        public Boolean evolve_pokemon(string pokemon_name, int new_level, string exp_cap, int id)
         {
-            string query = "UPDATE trainer_pokedex SET current_exp = 0, pokemon_name = '"+ pokemon_name +"', current_lvl = "+ new_level +", exp_cap = "+ exp_cap +";";
+            string query = "UPDATE trainer_pokedex SET current_exp = 0, pokemon_name = '"+ pokemon_name +"', current_lvl = "+ new_level +", exp_cap = "+ exp_cap +" WHERE id ="+ id;
+
+            Boolean results = Connection.ExecuteThisQuery(query, "GET OSR DATA", Connection.pokemon_connstring);
+
+            return results;
+        }
+
+        public Boolean catch_pokemon(string pokemon_id, string pokemon_name, string new_level, string exp_cap)
+        {
+            string query = @"INSERT INTO trainer_pokedex (pokemon_id,pokemon_name,trainer_id,current_lvl,current_exp,exp_cap)
+             VALUES ("+ pokemon_id +", '"+ pokemon_name +"', 99470721, "+ new_level +", 0 ,"+ exp_cap +")";
 
             Boolean results = Connection.ExecuteThisQuery(query, "GET OSR DATA", Connection.pokemon_connstring);
 
