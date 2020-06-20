@@ -86,52 +86,76 @@ namespace pokemonSim.Models
             return results;
         }
 
-        public List<IDictionary<string, string>> get_osr_data_archive()
+        public IDictionary<string, string> get_trainer_pokemon_by_id(int id)
         {
 
-            List<IDictionary<string, string>> results = new List<IDictionary<string, string>>();
+            IDictionary<string, string> results = new Dictionary<string, string>();
 
-            string query = "SELECT * FROM osr WHERE isDeleted = 0 AND (status = 'RELEASED' OR status = 'FORM CANCELLED' OR status = 'RETURNED') ORDER BY dateUpdated DESC";
+            string query = @"SELECT trainer_pokedex.id, trainer_pokedex.pokemon_id, trainer_pokedex.pokemon_name, trainer_pokedex.trainer_id, trainer_pokedex.current_lvl,
+                             trainer_pokedex.current_exp, trainer_pokedex.exp_cap, master_pokedex.is_fire, master_pokedex.is_water, 
+                             master_pokedex.is_grass, master_pokedex.is_electric, master_pokedex.is_flying, master_pokedex.lvl_unlock,
+                             master_pokedex.lvl_unlock, master_pokedex.lvl_cap, master_pokedex.can_evolve, master_pokedex.img FROM trainer_pokedex
+                            LEFT JOIN master_pokedex
+                            ON trainer_pokedex.pokemon_name = master_pokedex.pokemon_name WHERE trainer_pokedex.id ="+ id;
 
-            results = Connection.GetDataAssociateArray(query, "GET OSR DATA", Connection.pokemon_connstring);
+            results = Connection.GetDataArray(query, "GET OSR DATA", Connection.pokemon_connstring);
 
             return results;
         }
 
-        public List<IDictionary<string, string>> get_osr_burnin_data()
+        public IDictionary<string, string> get_pokemon_condition(string id, int lvl)
         {
 
-            List<IDictionary<string, string>> results = new List<IDictionary<string, string>>();
+            IDictionary<string, string> results = new Dictionary<string, string>();
 
-            string query = "SELECT * FROM osr_burnin WHERE isDeleted = 0 ORDER BY dateUpdated DESC";
+            string query = @"SELECT master_pokedex.pokemon_id, master_pokedex.pokemon_name, master_pokedex.is_fire,
+            master_pokedex.is_water, master_pokedex.is_grass, master_pokedex.is_electric, master_pokedex.is_flying,
+            master_pokedex.lvl_unlock,master_pokedex.lvl_cap,master_pokedex.can_evolve FROM master_pokedex WHERE
+            (" + lvl + " BETWEEN lvl_unlock AND lvl_cap) AND master_pokedex.pokemon_id = " + id + ";";
 
-            results = Connection.GetDataAssociateArray(query, "GET OSR DATA", Connection.pokemon_connstring);
+            results = Connection.GetDataArray(query, "GET OSR DATA", Connection.pokemon_connstring);
 
             return results;
         }
 
-        public List<IDictionary<string, string>> get_osr_burnin_data_pending()
+        public Boolean increase_level_only(string exp_cap, int new_level)
         {
+            string query = "UPDATE trainer_pokedex SET current_lvl = " + new_level + ", exp_cap = " + exp_cap + ", current_exp = 0";
 
-            List<IDictionary<string, string>> results = new List<IDictionary<string, string>>();
-
-            string query = "SELECT * FROM osr_burnin WHERE isDeleted = 0 AND (status != 'RELEASED' AND status != 'FORM CANCELLED') ORDER BY dateUpdated DESC";
-
-            results = Connection.GetDataAssociateArray(query, "GET OSR DATA", Connection.pokemon_connstring);
+            Boolean results = Connection.ExecuteThisQuery(query, "GET OSR DATA", Connection.pokemon_connstring);
 
             return results;
         }
 
-        public List<IDictionary<string, string>> get_osr_burnin_data_archive()
+        public Boolean increase_exp_only(int current_exp)
         {
+            string query = "UPDATE trainer_pokedex SET current_exp = "+ current_exp +";";
 
-            List<IDictionary<string, string>> results = new List<IDictionary<string, string>>();
-
-            string query = "SELECT * FROM osr_burnin WHERE isDeleted = 0 AND (status = 'RELEASED' OR status = 'FORM CANCELLED') ORDER BY dateUpdated DESC";
-
-            results = Connection.GetDataAssociateArray(query, "GET OSR DATA", Connection.pokemon_connstring);
+            Boolean results = Connection.ExecuteThisQuery(query, "GET OSR DATA", Connection.pokemon_connstring);
 
             return results;
         }
+
+        public Boolean evolve_pokemon(string pokemon_name, int new_level, string exp_cap)
+        {
+            string query = "UPDATE trainer_pokedex SET current_exp = 0, pokemon_name = '"+ pokemon_name +"', current_lvl = "+ new_level +", exp_cap = "+ exp_cap +";";
+
+            Boolean results = Connection.ExecuteThisQuery(query, "GET OSR DATA", Connection.pokemon_connstring);
+
+            return results;
+        }
+
+         public IDictionary<string, string> get_game_state_level(int lvl)
+        {
+
+            IDictionary<string, string> results = new Dictionary<string, string>();
+
+            string query = "SELECT * FROM game_state WHERE lvl = " + lvl;
+
+            results = Connection.GetDataArray(query, "GET LEVEL GAME STATE", Connection.pokemon_connstring);
+
+            return results;
+        }
+
      }
 }
