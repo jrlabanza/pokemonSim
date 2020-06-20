@@ -35,6 +35,7 @@
                     append += "<td id='name_" + data[i]["id"] + "' class=''>" + data[i]["pokemon_name"] + "</td>";
                     append += "<td id='current_lvl_" + data[i]["id"] + "'>" + data[i]["current_lvl"] + "</td>";
                     append += "<td id='current_exp_" + data[i]["id"] + "'>" + data[i]["current_exp"] + "</td>";
+                    append += "<td id='next_to_lvl_" + data[i]["id"] + "'>" + (parseInt(data[i]["exp_cap"]) - parseInt(data[i]["current_exp"])) + "</td>";
                     append += "<td id='type_" + data[i]["id"] + "'>";
                     data[i]["is_fire"] == 1 ? append += "FIRE<br>" : "";
                     data[i]["is_water"] == 1 ? append += "WATER<br>" : "";
@@ -146,7 +147,16 @@ $(document).on("click", "#level-up", function () {
         function (data) {
             console.log(data);
             if (data.done == "MAX") {
-                alert("POKEMON MAX");
+                $.notify({
+                    title: '<strong>Warning!</strong>',
+                    message: "POKEMON MAXED OUT!"
+                }, {
+                    type: 'danger',
+                    z_index: 9999
+                });
+                setTimeout(function () {
+                    $.notifyClose('top-right');
+                }, 3000);
             }
             $.post(
                 base_url + "Dashboard/get_trainer_pokemon_by_id",
@@ -161,6 +171,7 @@ $(document).on("click", "#level-up", function () {
                     $("#name_" + refresh.id).html(refresh.pokemon_name);
                     $("#current_lvl_" + refresh.id).html(refresh.current_lvl);
                     $("#current_exp_" + refresh.id).html(refresh.current_exp);
+                    $("#next_to_lvl_" + refresh.id).html(parseInt(refresh.exp_cap) - parseInt(refresh.current_exp));
                     refresh.is_fire == 1 ? append += "FIRE<br>" : "";
                     refresh.is_water == 1 ? append += "WATER<br>" : "";
                     refresh.is_grass == 1 ? append += "GRASS<br>" : "";
